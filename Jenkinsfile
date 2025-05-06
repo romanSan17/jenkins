@@ -24,7 +24,7 @@ pipeline {
 
         stage('Test App') {
             steps {
-                sh 'curl http://localhost:3000/ || exit 1'  
+                sh 'curl http://localhost:3001/ || exit 1'  
             }
         }
     }
