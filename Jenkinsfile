@@ -8,19 +8,30 @@ pipeline {
             }
         }
 
-        stage('Run app') {
+        stage('Run App') {
             steps {
-                sh 'nohup node app.js &'
+                sh 'nohup npm start &'
             }
         }
 
-        stage('Test endpoint') {
+        stage('Wait for App to Start') {
             steps {
                 script {
-                    sleep 3 
-                    sh 'curl -f http://localhost:3000'
+                    sleep(time: 10, unit: 'SECONDS')  
                 }
             }
+        }
+
+        stage('Test App') {
+            steps {
+                sh 'curl http://localhost:3000/ || exit 1'  
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Pipeline koik'
         }
     }
 }
